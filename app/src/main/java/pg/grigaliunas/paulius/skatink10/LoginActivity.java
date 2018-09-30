@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,13 +24,28 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.passwordText);
         loginBtn = (Button) findViewById(R.id.loginButton);
         signupBtn = (Button) findViewById(R.id.signupButton);
-        OpenWindow();
+        openMainWindow();
+        openSignupWindow();
     }
-    public void OpenWindow() {
+
+    public void openMainWindow() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) findViewById(R.id.warningText);
+                if(mydb.Validate(String.valueOf(username.getText()), password.getText().toString())!= null)
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                else tv.setText( " incorrect username or password " );
+            }
+        });
+
+    }
+
+    public void openSignupWindow() {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
     }
