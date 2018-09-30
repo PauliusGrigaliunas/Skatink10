@@ -134,18 +134,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public String ValidateByUserName(String username, String password){
+    public String Validate(String username, String password){
         Cursor c = db.rawQuery("SELECT * FROM " + Table_Parent +
                 " WHERE " +Col_username+ " ='"+username.trim()+
                 "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
         if (c.moveToFirst()) return c.getString(0);
         else return null;
-    }
-    public Cursor findByID(int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent +
-                " WHERE " +Col_ID+" = "+id , null);
-        cursor.moveToFirst();
-        return cursor;
     }
 }
 

@@ -1,8 +1,6 @@
 package pg.grigaliunas.paulius.skatink10;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -14,25 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private int idDB;
-    private Cursor cursor;
-    private TextView textView, fullNameText, EmailText;
-    private DatabaseHelper mydb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mydb = new DatabaseHelper(this);
-
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,25 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        setUser();
-    }
-
-    public void setUser(){
-        idDB = Integer.parseInt(getIntent().getStringExtra(LoginActivity.Extra_Text));
-        cursor = mydb.findByID(idDB);
-
-        textView = (TextView) findViewById(R.id.textView);
-        textView.setText("hello " + cursor.getString(1));
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        View header=navigationView.getHeaderView(0);
-        fullNameText = header.findViewById(R.id.fullNameText);
-        EmailText = header.findViewById(R.id.EmailText);
-        fullNameText.setText(cursor.getString(3) + " " + cursor.getString(4));
-        EmailText.setText(cursor.getString(5));
     }
 
     @Override

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String Extra_Text = "IDfromTable";
+
 
     private DatabaseHelper mydb;
     private EditText username, password;
@@ -28,24 +28,20 @@ public class LoginActivity extends AppCompatActivity {
         openSignupWindow();
     }
 
-    private void openMainWindow() {
+    public void openMainWindow() {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TextView tv = (TextView) findViewById(R.id.warningText);
-                String id = mydb.ValidateByUserName(String.valueOf(username.getText()), password.getText().toString());
-                if( id != null){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra(Extra_Text, id);
-                    startActivity(intent);
-                }
+                if(mydb.Validate(String.valueOf(username.getText()), password.getText().toString())!= null)
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 else tv.setText( " incorrect username or password " );
             }
         });
 
     }
 
-    private void openSignupWindow() {
+    public void openSignupWindow() {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
