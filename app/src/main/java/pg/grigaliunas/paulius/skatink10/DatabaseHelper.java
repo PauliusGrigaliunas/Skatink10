@@ -1,4 +1,4 @@
-package databaseClasses;
+package pg.grigaliunas.paulius.skatink10;
 
 import android.content.ContentValues;
 import android.content.Context;
