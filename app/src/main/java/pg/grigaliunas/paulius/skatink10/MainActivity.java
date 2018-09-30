@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -62,8 +64,8 @@ public class MainActivity extends AppCompatActivity
         idDB = Integer.parseInt(getIntent().getStringExtra(LoginActivity.Extra_Text));
         cursor = mydb.findByID(idDB);
 
-        textView = (TextView) findViewById(R.id.textView);
-        textView.setText("hello " + cursor.getString(1));
+        //textView = (TextView) findViewById(R.id.textView);
+        //textView.setText("hello " + cursor.getString(1));
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -109,15 +111,30 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        Fragment fragment;
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            fragment = new HomeFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_notification) {
+            fragment = new NotificationFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_children) {
+            fragment = new ChildFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
 
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_tasks) {
+            fragment = new TaskFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
