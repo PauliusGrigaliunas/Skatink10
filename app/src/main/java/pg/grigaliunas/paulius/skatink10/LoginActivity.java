@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-
+    public static final String Extra_Text = "IDfromTable";
 
     private DatabaseHelper mydb;
     private EditText username, password;
@@ -23,13 +24,32 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.passwordText);
         loginBtn = (Button) findViewById(R.id.loginButton);
         signupBtn = (Button) findViewById(R.id.signupButton);
-        OpenWindow();
+        openMainWindow();
+        openSignupWindow();
     }
-    public void OpenWindow() {
+
+    private void openMainWindow() {
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView tv = (TextView) findViewById(R.id.warningText);
+                String id = mydb.ValidateByUserName(String.valueOf(username.getText()), password.getText().toString());
+                if( id != null){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra(Extra_Text, id);
+                    startActivity(intent);
+                }
+                else tv.setText( " incorrect username or password " );
+            }
+        });
+
+    }
+
+    private void openSignupWindow() {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
     }
