@@ -1,7 +1,10 @@
 package pg.grigaliunas.paulius.skatink10;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +30,11 @@ public class SignupActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.emailText);
         phone = (EditText) findViewById(R.id.phoneText);
         addbtn = (Button) findViewById(R.id.addBtn);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AddData();
+
     }
 
     public void AddData(){
@@ -54,4 +61,12 @@ public class SignupActivity extends AppCompatActivity {
                 }
         );
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home) this.finish();
+        return super.onOptionsItemSelected(item);
+    }
 }
+
