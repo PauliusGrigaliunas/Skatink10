@@ -1,11 +1,9 @@
 package pg.grigaliunas.paulius.skatink10;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +19,7 @@ public class ChildFragment extends Fragment {
 
     private MainActivity mainActivity = new MainActivity();
     private DatabaseHelper mydb;
+    private UserData userData = UserData.getInstance();
     private Button addChildBtn;
     private EditText usernameText, passwordText, nameText;
     private TextView textView;
@@ -35,11 +34,17 @@ public class ChildFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_child, container, false);
 
-        mydb = mainActivity.mydb;
+        mydb = new DatabaseHelper(getActivity());
 
+
+        usernameText = (EditText) view.findViewById(R.id.usernameText1);
+        passwordText = (EditText) view.findViewById(R.id.passwordText1);
+        nameText = (EditText) view.findViewById(R.id.nameText1);
         addChildBtn = (Button) view.findViewById(R.id.addChildBtn);
         textView = (TextView) view.findViewById(R.id.textView);
-        openSignupWindow();
+
+        //openSignupWindow();
+        AddData();
         return view;
     }
 
@@ -58,7 +63,17 @@ public class ChildFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        boolean isInserted = mydb.insertChildData(
+                                userData.getData().getInt(0),
+                                usernameText.getText().toString(),
+                                passwordText.getText().toString(),
+                                nameText.getText().toString());
+                        if (isInserted == true) {
+                            Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
+                        }
                     }
 
                 }

@@ -1,7 +1,5 @@
 package pg.grigaliunas.paulius.skatink10;
 
-import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -23,8 +21,8 @@ public class SignupActivity extends AppCompatActivity {
 
         mydb = new DatabaseHelper(this);
 
-        username = (EditText) findViewById(R.id.usernameText);
-        password = (EditText) findViewById(R.id.passwordText);
+        username = (EditText) findViewById(R.id.usernameText1);
+        password = (EditText) findViewById(R.id.passwordText1);
         name = (EditText) findViewById(R.id.fullNameText);
         surname = (EditText) findViewById(R.id.surnameText);
         email = (EditText) findViewById(R.id.emailText);
