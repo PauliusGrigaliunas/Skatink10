@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Skatink.db";
@@ -146,6 +149,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " WHERE " +Col_ID+" = "+id , null);
         cursor.moveToFirst();
         return cursor;
+    }
+
+    public ArrayList<Cursor> findChilds (int id){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
+                " WHERE " +Col_parent_ID+" = "+id , null);
+
+        ArrayList<Cursor> list  = new ArrayList<Cursor>();
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            list.add(cursor);
+            cursor.moveToNext();
+        }
+        return list;
     }
 }
 

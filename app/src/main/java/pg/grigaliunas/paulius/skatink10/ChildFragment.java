@@ -1,15 +1,23 @@
 package pg.grigaliunas.paulius.skatink10;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 
 /**
@@ -17,17 +25,12 @@ import android.widget.Toast;
  */
 public class ChildFragment extends Fragment {
 
-    private MainActivity mainActivity = new MainActivity();
     private DatabaseHelper mydb;
     private UserData userData = UserData.getInstance();
-    private Button addChildBtn;
-    private EditText usernameText, passwordText, nameText;
-    private TextView textView;
+    private ListView listView;
+    private FloatingActionButton fab;
 
-    public ChildFragment() {
-
-    }
-
+    public ChildFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,48 +38,29 @@ public class ChildFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child, container, false);
 
         mydb = new DatabaseHelper(getActivity());
+        listView = (ListView) view.findViewById(R.id.listView);
+
+        List listItems = mydb.findChilds(userData.getData().getInt(0));
+
+       /* SimpleAdapter adapter = new SimpleAdapter(this, listItems,
+                        R.layout.list_row,
+                        new String[]{"name", "designation", "location"},
+                        new int[]{R.id.name, R.id.designation, R.id.location});
+*/
 
 
-        usernameText = (EditText) view.findViewById(R.id.usernameText1);
-        passwordText = (EditText) view.findViewById(R.id.passwordText1);
-        nameText = (EditText) view.findViewById(R.id.nameText1);
-        addChildBtn = (Button) view.findViewById(R.id.addChildBtn);
-        textView = (TextView) view.findViewById(R.id.textView);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        openChildActivity();
 
-        //openSignupWindow();
-        AddData();
         return view;
     }
 
-    private void openSignupWindow() {
-        addChildBtn.setOnClickListener(new View.OnClickListener() {
+    private void openChildActivity() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText( " buttonClicked " );
-
+                startActivity(new Intent(getActivity(), ChildActivity.class));
             }
         });
-    }
-
-    public void AddData(){
-        addChildBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        boolean isInserted = mydb.insertChildData(
-                                userData.getData().getInt(0),
-                                usernameText.getText().toString(),
-                                passwordText.getText().toString(),
-                                nameText.getText().toString());
-                        if (isInserted == true) {
-                            Toast.makeText(getActivity(), "Data inserted", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            Toast.makeText(getActivity(), "Data not inserted", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                }
-        );
     }
 }
