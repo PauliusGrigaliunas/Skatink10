@@ -24,4 +24,8 @@ public class UserData {
         }
         return instance;
     }
+    public void clear()
+    {
+        instance = null;
+    }
 }

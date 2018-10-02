@@ -157,6 +157,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor allTasks(){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Tasks , null);
+        return cursor;
+    }
+
 
 }
 

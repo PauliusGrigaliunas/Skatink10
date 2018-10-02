@@ -43,10 +43,7 @@ public class ChildFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView);
         textView = (TextView) view.findViewById(R.id.textView4);
 
-        //List <Integer> listItems = mydb.findChildren(userData.getData().getInt(0));
-
         showList();
-
 
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         openChildActivity();
@@ -64,7 +61,6 @@ public class ChildFragment extends Fragment {
     }
 
     private void showList(){
-
 
         arrayList = new ArrayList<HashMap<String,String>>();
         try{
