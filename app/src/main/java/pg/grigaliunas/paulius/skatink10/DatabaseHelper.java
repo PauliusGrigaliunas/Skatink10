@@ -151,17 +151,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public ArrayList<Cursor> findChilds (int id){
+    public Cursor findChildren(int id){
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
                 " WHERE " +Col_parent_ID+" = "+id , null);
-
-        ArrayList<Cursor> list  = new ArrayList<Cursor>();
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-            list.add(cursor);
-            cursor.moveToNext();
-        }
-        return list;
+        return cursor;
     }
+
+
 }
 

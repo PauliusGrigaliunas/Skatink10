@@ -2,22 +2,20 @@ package pg.grigaliunas.paulius.skatink10;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -30,6 +28,10 @@ public class ChildFragment extends Fragment {
     private ListView listView;
     private FloatingActionButton fab;
 
+    private ArrayList arrayList;
+    private HashMap<String, String> hmap;
+
+    private TextView textView;
     public ChildFragment() {}
 
     @Override
@@ -39,14 +41,11 @@ public class ChildFragment extends Fragment {
 
         mydb = new DatabaseHelper(getActivity());
         listView = (ListView) view.findViewById(R.id.listView);
+        textView = (TextView) view.findViewById(R.id.textView4);
 
-        List listItems = mydb.findChilds(userData.getData().getInt(0));
+        //List <Integer> listItems = mydb.findChildren(userData.getData().getInt(0));
 
-       /* SimpleAdapter adapter = new SimpleAdapter(this, listItems,
-                        R.layout.list_row,
-                        new String[]{"name", "designation", "location"},
-                        new int[]{R.id.name, R.id.designation, R.id.location});
-*/
+        showList();
 
 
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -62,5 +61,40 @@ public class ChildFragment extends Fragment {
                 startActivity(new Intent(getActivity(), ChildActivity.class));
             }
         });
+    }
+
+    private void showList(){
+
+
+        arrayList = new ArrayList<HashMap<String,String>>();
+        try{
+
+            Cursor c = mydb.findChildren(userData.getData().getInt(0));
+
+
+            while(c.moveToNext())
+            {
+                hmap= new HashMap<String, String>();
+                hmap.put("id", c.getString(0));
+                hmap.put("name", c.getString(4));
+                hmap.put("points",c.getString(5));
+                arrayList.add(hmap);
+            }
+        }
+        catch(Exception e){
+            Log.e("error",e.getMessage());
+
+        }
+
+        String from[]={"id","name","points"};
+        int to[] = {R.id.idText, R.id.nameText, R.id.pointText};
+
+        SimpleAdapter adapter = new SimpleAdapter(
+                getContext(),
+                arrayList,
+                R.layout.list_row,
+                from, to );
+
+        listView.setAdapter(adapter);
     }
 }
