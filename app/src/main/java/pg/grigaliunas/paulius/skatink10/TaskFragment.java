@@ -47,6 +47,12 @@ public class TaskFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showList();
+    }
+
     private void openTaskActivity() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

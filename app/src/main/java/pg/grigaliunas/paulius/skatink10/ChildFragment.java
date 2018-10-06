@@ -51,6 +51,12 @@ public class ChildFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        showList();
+    }
+
     private void openChildActivity() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +65,7 @@ public class ChildFragment extends Fragment {
             }
         });
     }
+
 
     private void showList(){
 
