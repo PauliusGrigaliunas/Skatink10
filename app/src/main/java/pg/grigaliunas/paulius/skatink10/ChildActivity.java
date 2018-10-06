@@ -6,8 +6,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 
 public class ChildActivity extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class ChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child);
 
-        mydb = new DatabaseHelper(this);
+        mydb = new DatabaseChild(this);
 
         usernameText = (EditText) findViewById(R.id.usernameText);
         passwordText = (EditText) findViewById(R.id.passwordText);

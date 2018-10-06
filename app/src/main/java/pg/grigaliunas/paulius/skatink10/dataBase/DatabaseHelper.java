@@ -1,4 +1,4 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.dataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,7 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Col_points = "points";
     public static final String Col_date = "date ";
     public static final String Col_confirmed = "confirmed";
-    private SQLiteDatabase db = this.getWritableDatabase();
+    protected SQLiteDatabase db = this.getWritableDatabase();
 
     private final String CreateParentTable =
             "Create Table " + Table_Parent + " (" +
@@ -82,11 +82,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CreateChildTable);
         db.execSQL(CreateTaskTable);
         db.execSQL(CreateAssigmentTable);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("Drop Table if Exists " + Table_Assigment );
         db.execSQL("Drop Table if Exists " + Table_Parent );
         db.execSQL("Drop Table if Exists " + Table_Child );
         db.execSQL("Drop Table if Exists " + Table_Tasks );
@@ -137,13 +137,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public Cursor ValidateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_Parent +
-                " WHERE " +Col_username+ " ='"+username.trim()+
-                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
-        if (c.moveToFirst()) return c;
-        else return null;
-    }
     public Cursor findByID(int id){
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent +
                 " WHERE " +Col_ID+" = "+id , null);
@@ -157,11 +150,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor findParent (int id){
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent +
+                " WHERE " +Col_ID+" = "+id , null);
+        return cursor;
+    }
+
     public Cursor allTasks(){
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Tasks , null);
         return cursor;
     }
 
 
+
+    public Cursor showData(){
+        return null;
+    }
+    protected Cursor findData(int id){
+        return null;
+    }
+
+    public Cursor ValidateByUserName(String username, String password) {
+        return  null;
+    }
 }
 

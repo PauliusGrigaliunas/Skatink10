@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
+
 public class SignupActivity extends AppCompatActivity {
 
     private DatabaseHelper mydb;
@@ -19,7 +22,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        mydb = new DatabaseHelper(this);
+        mydb = new DatabaseParent(this);
 
         username = (EditText) findViewById(R.id.usernameText1);
         password = (EditText) findViewById(R.id.passwordText1);

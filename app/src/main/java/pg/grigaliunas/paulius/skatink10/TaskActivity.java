@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
+
 public class TaskActivity extends AppCompatActivity {
 
     public DatabaseHelper mydb;
@@ -19,7 +22,7 @@ public class TaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
-        mydb = new DatabaseHelper(this);
+        mydb = new DatabaseTask(this);
         name = (EditText) findViewById(R.id.nameText);
         point = (EditText) findViewById(R.id.pointText);
         addTaskBtn = (Button) findViewById(R.id.addButton);

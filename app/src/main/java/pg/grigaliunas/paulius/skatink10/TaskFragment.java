@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +42,7 @@ public class TaskFragment extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.floatingActionButton);
         openTaskActivity();
 
-        mydb = new DatabaseHelper(getActivity());
+        mydb = new DatabaseTask(getActivity());
         listView = (ListView) view.findViewById(R.id.listView);
         showList();
 
@@ -66,7 +68,7 @@ public class TaskFragment extends Fragment {
         arrayList = new ArrayList<HashMap<String,String>>();
         try{
 
-            Cursor c = mydb.allTasks();
+            Cursor c = mydb.showData();
 
 
             while(c.moveToNext())

@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
+
 public class LoginActivity extends AppCompatActivity {
 
     private DatabaseHelper mydb;
@@ -19,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mydb = new DatabaseHelper(this);
+        mydb = new DatabaseParent(this);
         username = (EditText) findViewById(R.id.usernameText1);
         password = (EditText) findViewById(R.id.passwordText1);
         loginBtn = (Button) findViewById(R.id.loginButton);
