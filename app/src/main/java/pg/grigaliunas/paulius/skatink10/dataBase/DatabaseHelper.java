@@ -5,18 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.Nullable;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Skatink.db";
+    public static final String Table_User = "User";
     public static final String Table_Parent = "parent";
     public static final String Table_Child = "child";
     public static final String Table_Tasks = "tasks";
+    public static final String Table_Email = "email";
     public static final String Table_Assigment = "assigment";
     public static final String Col_ID = "ID";
     public static final String Col_Nr = "Nr";
@@ -26,34 +24,42 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Col_surname = "surname";
     public static final String Col_email = "email";
     public static final String Col_phone = "phone";
+    public static final String Col_user_ID = "user_ID";
     public static final String Col_parent_ID = "parent_ID";
     public static final String Col_child_ID = "child_ID";
     public static final String Col_task_NR = "task_NR";
     public static final String Col_points = "points";
     public static final String Col_date = "date ";
+    public static final String Col_text = "text ";
     public static final String Col_confirmed = "confirmed";
     protected SQLiteDatabase db = this.getWritableDatabase();
 
-    protected final String CreateParentTable =
-            "Create Table " + Table_Parent + " (" +
+
+    protected final String CreateUserTable =
+            "Create Table " + Table_User + " (" +
                     Col_ID + " INTEGER PRIMARY KEY, " +
                     Col_username + " text UNIQUE, " +
                     Col_password + " text, " +
                     Col_name + " text, " +
-                    Col_surname + " text , " +
+                    Col_confirmed + "text )";
+
+    protected final String CreateParentTable =
+            "Create Table " + Table_Parent + " (" +
+                    Col_ID + " INTEGER PRIMARY KEY, " +
+                    Col_user_ID + " INTEGER, " +
+                    Col_surname + " text, " +
                     Col_email + " text UNIQUE, " +
-                    Col_phone + " text )";
+                    Col_phone + " text, " +
+                    "FOREIGN KEY("+ Col_user_ID +") REFERENCES " + Table_User + "("+Col_ID+"))";
 
     protected  final String CreateChildTable =
             "Create Table " + Table_Child + " (" +
                     Col_ID + " INTEGER PRIMARY KEY, "+
                     Col_parent_ID + " INTEGER, " +
-                    Col_username + " text UNIQUE, " +
-                    Col_password + " text, " +
-                    Col_name + " text, " +
+                    Col_user_ID + " INTEGER, " +
                     Col_points + " INTEGER, " +
-                    "FOREIGN KEY("+Col_parent_ID+") REFERENCES " + Table_Parent + "("+Col_ID+"))";
-
+                    "FOREIGN KEY("+Col_parent_ID+") REFERENCES " + Table_Parent + "("+Col_ID+"), " +
+                    "FOREIGN KEY("+ Col_user_ID +") REFERENCES " + Table_User + "("+Col_ID+"))";
 
     protected  final String CreateTaskTable =
             "Create Table " + Table_Tasks+ " (" +
@@ -72,48 +78,60 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
 
 
+    protected  final String CreateEmailTable =
+            "Create Table " + Table_Email+ " (" +
+                    Col_Nr + " INTEGER PRIMARY KEY, "+
+                    Col_parent_ID + " INTEGER, " +
+                    Col_child_ID + " INTEGER, " +
+                    Col_text + " text, " +
+                    Col_date + " text, " +
+                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Child  + "("+Col_ID+")," +
+                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
+
     public DatabaseHelper(Context context) {
         super(context,DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        db.execSQL(CreateUserTable);
         db.execSQL(CreateParentTable);
         db.execSQL(CreateChildTable);
         db.execSQL(CreateTaskTable);
         db.execSQL(CreateAssigmentTable);
+        db.execSQL(CreateEmailTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("Drop Table if Exists " + Table_Email );
         db.execSQL("Drop Table if Exists " + Table_Assigment );
+        db.execSQL("Drop Table if Exists " + Table_Tasks );
         db.execSQL("Drop Table if Exists " + Table_Parent );
         db.execSQL("Drop Table if Exists " + Table_Child );
-        db.execSQL("Drop Table if Exists " + Table_Tasks );
+        db.execSQL("Drop Table if Exists " + Table_User );
         onCreate(db);
     }
     public boolean insertParentData(String userName, String password, String name, String surname, String email, String phone){
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_username, userName);
-        contentValues.put(Col_password, password);
-        contentValues.put(Col_name, name);
-        contentValues.put(Col_surname, surname );
-        contentValues.put(Col_email, email);
-        contentValues.put(Col_phone, phone );
-        long result = db.insert(Table_Parent, null, contentValues);
-        return (result == -1 )? false: true;
+        if( insertUserData(userName,password,name,true)) {
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_surname, surname);
+            contentValues2.put(Col_email, email);
+            contentValues2.put(Col_phone, phone);
+            return (db.insert(Table_Parent, null, contentValues2) == -1 )? false: true;
+        }
+        else return false;
     }
     public boolean insertChildData(int parentID, String userName, String password, String name){
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_parent_ID, parentID);
-        contentValues.put(Col_username, userName);
-        contentValues.put(Col_password, password);
-        contentValues.put(Col_name, name);
-        contentValues.put(Col_points, 0);
-        long result = db.insert(Table_Child, null, contentValues);
-        return (result == -1 )? false: true;
+        if( insertUserData(userName,password,name,true)) {
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_parent_ID, parentID);
+            contentValues2.put(Col_points, 0);
+            return (db.insert(Table_Child, null, contentValues2) == -1 )? false: true;
+        }
+        else return false;
     }
 
     public boolean insertTaskData(String name, int points ){
@@ -129,11 +147,33 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
         Calendar cal = Calendar.getInstance();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_child_ID, childID);
+        contentValues.put(Col_user_ID, childID);
         contentValues.put(Col_task_NR, taskNR);
         contentValues.put(Col_date, cal.getTime().toString());
         contentValues.put(Col_confirmed, confirmed);
         long result = db.insert(Table_Assigment, null, contentValues);
+        return (result == -1 )? false: true;
+    }
+
+    public boolean insertEmailData(int senderID, int receiverID, String text){
+
+        Calendar cal = Calendar.getInstance();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_child_ID, senderID);
+        contentValues.put(Col_parent_ID, receiverID);
+        contentValues.put(Col_text, text);
+        contentValues.put(Col_date, cal.getTime().toString());
+        long result = db.insert(Table_Email, null, contentValues);
+        return (result == -1 )? false: true;
+    }
+    public boolean insertUserData(String userName, String password, String name, boolean confirmed){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(Col_username, userName);
+        contentValues.put(Col_password, password);
+        contentValues.put(Col_name, name);
+        contentValues.put(Col_confirmed, confirmed);
+        long result = db.insert(Table_User, null, contentValues);
         return (result == -1 )? false: true;
     }
 
@@ -142,16 +182,18 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public abstract Cursor findDataById(int id);
     public abstract boolean delete(int id);
 
-    public boolean insertData(){
-        return false;
-    }
 
-    public Cursor ValidateByUserName(String username, String password) {
-        return  null;
+    public Cursor ValidateByUserName(String username, String password){
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+                " WHERE " +Col_username+ " ='"+username.trim()+
+                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
+        if (c.moveToFirst()) return c;
+        else return null;
     }
 
     public Cursor findByParentId(int anInt) {
         return  null;
     }
+
 }
 

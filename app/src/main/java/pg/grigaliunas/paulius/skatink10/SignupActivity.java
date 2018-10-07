@@ -49,8 +49,7 @@ public class SignupActivity extends AppCompatActivity {
                                 name.getText().toString(),
                                 surname.getText().toString(),
                                 email.getText().toString(),
-                                phone.getText().toString()
-                        );
+                                phone.getText().toString());
                         if (isInserted == true) {
                             Toast.makeText(SignupActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                         }

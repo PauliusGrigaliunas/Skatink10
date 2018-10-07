@@ -5,20 +5,30 @@ import android.content.Context;
 import android.database.Cursor;
 
 public class DatabaseChild extends DatabaseHelper {
+
     public DatabaseChild(Context context) {
         super(context);
     }
 
     public boolean insertData(int parentID, String userName, String password, String name){
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_parent_ID, parentID);
-        contentValues.put(Col_username, userName);
-        contentValues.put(Col_password, password);
-        contentValues.put(Col_name, name);
-        contentValues.put(Col_points, 0);
-        long result = db.insert(Table_Child, null, contentValues);
-        return (result == -1 )? false: true;
+        if( super.insertUserData(userName,password,name,true)) {
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_parent_ID, parentID);
+            contentValues2.put(Col_points, 0);
+            return (db.insert(Table_Child, null, contentValues2) == -1 )? false: true;
+        }
+        else return false;
+    }
+
+    @Override
+    public Cursor ValidateByUserName(String username, String password){
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+                " WHERE " +Col_username+ " ='"+username.trim()+
+                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
+        if (c.moveToFirst()) return c;
+        else return null;
     }
 
     @Override

@@ -9,18 +9,16 @@ public class DatabaseParent extends DatabaseHelper {
         super(context);
     }
 
-
     public boolean insertData(String userName, String password, String name, String surname, String email, String phone){
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_username, userName);
-        contentValues.put(Col_password, password);
-        contentValues.put(Col_name, name);
-        contentValues.put(Col_surname, surname );
-        contentValues.put(Col_email, email);
-        contentValues.put(Col_phone, phone );
-        long result = db.insert(Table_Parent, null, contentValues);
-        return (result == -1 )? false: true;
+        if( super.insertUserData(userName,password,name,true)) {
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_surname, surname);
+            contentValues2.put(Col_email, email);
+            contentValues2.put(Col_phone, phone);
+            return (db.insert(Table_Parent, null, contentValues2) == -1 )? false: true;
+        }
+       else return false;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class DatabaseParent extends DatabaseHelper {
 
     @Override
     public Cursor ValidateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_Parent +
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
                 " WHERE " +Col_username+ " ='"+username.trim()+
                 "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
         if (c.moveToFirst()) return c;
