@@ -40,7 +40,7 @@ public class ChildActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         boolean isInserted = mydb.insertChildData(
-                                userData.getData().getInt(0),
+                                userData.getData().getInt(6),
                                 usernameText.getText().toString(),
                                 passwordText.getText().toString(),
                                 nameText.getText().toString());

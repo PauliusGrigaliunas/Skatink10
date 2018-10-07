@@ -28,17 +28,24 @@ public class DatabaseParent extends DatabaseHelper {
 
     @Override
     public Cursor findDataById(int id) {
-        return null;
+
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+                " WHERE " +Col_ID+" = "+ id  , null);
+        if (c.moveToFirst()) return c;
+        else return null;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        int result = db.delete(Table_Parent, Col_ID + "=" + id, null);
+        if (result != 0) return super.delete(id);
+        else return false;
     }
 
     @Override
     public Cursor ValidateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a" +
+                " INNER JOIN " + Table_Parent  +" on a." + Col_ID+  " = " + Col_user_ID +
                 " WHERE " +Col_username+ " ='"+username.trim()+
                 "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
         if (c.moveToFirst()) return c;

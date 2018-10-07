@@ -24,7 +24,8 @@ public class DatabaseChild extends DatabaseHelper {
 
     @Override
     public Cursor ValidateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a" +
+                " INNER JOIN " + Table_Child  +" on a." + Col_ID+  " = " + Col_user_ID +
                 " WHERE " +Col_username+ " ='"+username.trim()+
                 "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
         if (c.moveToFirst()) return c;
@@ -47,7 +48,8 @@ public class DatabaseChild extends DatabaseHelper {
     @Override
     public boolean delete(int id) {
         int result = db.delete(Table_Child, Col_ID + "=" + id, null);
-        return (result == 0 )? false: true;
+        if (result != 0 ) return super.delete(id);
+        else return  false;
     }
 
     @Override

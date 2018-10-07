@@ -10,7 +10,7 @@ import java.util.Calendar;
 
 public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Skatink.db";
-    public static final String Table_User = "User";
+    public static final String Table_User = "user";
     public static final String Table_Parent = "parent";
     public static final String Table_Child = "child";
     public static final String Table_Tasks = "tasks";
@@ -41,7 +41,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                     Col_username + " text UNIQUE, " +
                     Col_password + " text, " +
                     Col_name + " text, " +
-                    Col_confirmed + "text )";
+                    Col_confirmed + " BOOLEAN )";
 
     protected final String CreateParentTable =
             "Create Table " + Table_Parent + " (" +
@@ -114,22 +114,22 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     }
     public boolean insertParentData(String userName, String password, String name, String surname, String email, String phone){
         if( insertUserData(userName,password,name,true)) {
-            ContentValues contentValues2 = new ContentValues();
-            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
-            contentValues2.put(Col_surname, surname);
-            contentValues2.put(Col_email, email);
-            contentValues2.put(Col_phone, phone);
-            return (db.insert(Table_Parent, null, contentValues2) == -1 )? false: true;
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Col_user_ID, findByUserName(userName, password).getInt(0));
+            contentValues.put(Col_surname, surname);
+            contentValues.put(Col_email, email);
+            contentValues.put(Col_phone, phone);
+            return (db.insert(Table_Parent, null, contentValues) == -1 )? false: true;
         }
         else return false;
     }
     public boolean insertChildData(int parentID, String userName, String password, String name){
-        if( insertUserData(userName,password,name,true)) {
-            ContentValues contentValues2 = new ContentValues();
-            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
-            contentValues2.put(Col_parent_ID, parentID);
-            contentValues2.put(Col_points, 0);
-            return (db.insert(Table_Child, null, contentValues2) == -1 )? false: true;
+        if( insertUserData(userName,password,name,false)) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Col_parent_ID, parentID);
+            contentValues.put(Col_user_ID, findByUserName(userName, password).getInt(0));
+            contentValues.put(Col_points, 0);
+            return (db.insert(Table_Child, null, contentValues) == -1 )? false: true;
         }
         else return false;
     }
@@ -180,10 +180,20 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     public abstract Cursor showData();
     public abstract Cursor findDataById(int id);
-    public abstract boolean delete(int id);
 
+    public  boolean delete(int id) {
+        int result = db.delete(Table_User, Col_ID + "=" + id, null);
+        return (result == 0) ? false : true;
+    }
 
     public Cursor ValidateByUserName(String username, String password){
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+                " WHERE " +Col_username+ " ='"+username.trim()+
+                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
+        if (c.moveToFirst()) return c;
+        else return null;
+    }
+    public Cursor findByUserName(String username, String password){
         Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
                 " WHERE " +Col_username+ " ='"+username.trim()+
                 "' AND " +Col_password+ " ='"+password.trim()+"'" , null);

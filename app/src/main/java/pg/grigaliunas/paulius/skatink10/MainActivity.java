@@ -50,15 +50,14 @@ public class MainActivity extends AppCompatActivity
 
     public void setUser(){
 
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header=navigationView.getHeaderView(0);
         fullNameText = header.findViewById(R.id.fullNameText);
         EmailText = header.findViewById(R.id.EmailText);
-        fullNameText.setText(userData.getData().getString(3) + " " + userData.getData().getString(4));
-        EmailText.setText(userData.getData().getString(5));
+        fullNameText.setText(userData.getData().getString(3)+ " "
+                + userData.getData().getString(7));
+        EmailText.setText(userData.getData().getString(8));
     }
 
     @Override
