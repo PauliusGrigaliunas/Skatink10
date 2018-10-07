@@ -22,4 +22,14 @@ public class DatabaseTask extends DatabaseHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Tasks , null);
         return cursor;
     }
+
+    @Override
+    public Cursor findDataById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
 }

@@ -15,10 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 
 
@@ -45,7 +47,7 @@ public class ChildFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_child, container, false);
 
-        mydb = new DatabaseHelper(getActivity());
+        mydb = new DatabaseChild(getActivity());
         listView = (ListView) view.findViewById(R.id.listView);
         textView = (TextView) view.findViewById(R.id.textView4);
 
@@ -78,7 +80,7 @@ public class ChildFragment extends Fragment {
         arrayList = new ArrayList<HashMap<String,String>>();
         try{
 
-            Cursor c = mydb.findChildren(userData.getData().getInt(0));
+            Cursor c = mydb.findByParentId(userData.getData().getInt(0));
 
 
             while(c.moveToNext())
@@ -113,12 +115,13 @@ public class ChildFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 HashMap element = (HashMap) arrayList.get(position);
 
+                int name =  Integer.parseInt(element.get("id").toString());
 
                 Bundle bundle = new Bundle();
-                int name = (Integer) element.get("id");
-                bundle.putInt("data",name);
+                 bundle.putInt("data",name);
 
                 Fragment fragment = new ChildInfoFragment();
                 fragment.setArguments(bundle);

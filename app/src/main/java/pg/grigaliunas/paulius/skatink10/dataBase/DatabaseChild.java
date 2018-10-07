@@ -26,12 +26,24 @@ public class DatabaseChild extends DatabaseHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child , null);
         return cursor;
     }
+
     @Override
-    public Cursor findData(int id){
+    public Cursor findDataById(int id) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
-                " WHERE " +Col_task_NR+" = "+ id , null);
+                " WHERE " +Col_ID+" = "+ id , null);
         return cursor;
     }
 
+    @Override
+    public boolean delete(int id) {
+        int result = db.delete(Table_Child, Col_ID + "=" + id, null);
+        return (result == 0 )? false: true;
+    }
 
+    @Override
+    public Cursor findByParentId(int id){
+    Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
+            " WHERE " +Col_parent_ID+" = "+id , null);
+        return cursor;
+    }
 }

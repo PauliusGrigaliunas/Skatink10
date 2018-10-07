@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Skatink.db";
     public static final String Table_Parent = "parent";
     public static final String Table_Child = "child";
@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Col_confirmed = "confirmed";
     protected SQLiteDatabase db = this.getWritableDatabase();
 
-    private final String CreateParentTable =
+    protected final String CreateParentTable =
             "Create Table " + Table_Parent + " (" +
                     Col_ID + " INTEGER PRIMARY KEY, " +
                     Col_username + " text UNIQUE, " +
@@ -44,7 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     Col_email + " text UNIQUE, " +
                     Col_phone + " text )";
 
-    private final String CreateChildTable =
+    protected  final String CreateChildTable =
             "Create Table " + Table_Child + " (" +
                     Col_ID + " INTEGER PRIMARY KEY, "+
                     Col_parent_ID + " INTEGER, " +
@@ -55,13 +55,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY("+Col_parent_ID+") REFERENCES " + Table_Parent + "("+Col_ID+"))";
 
 
-    private final String CreateTaskTable =
+    protected  final String CreateTaskTable =
             "Create Table " + Table_Tasks+ " (" +
                     Col_Nr + " INTEGER PRIMARY KEY, "+
                     Col_name + " text, " +
                     Col_points + " INTEGER) ";
 
-    private final String CreateAssigmentTable =
+    protected  final String CreateAssigmentTable =
             "Create Table " + Table_Assigment+ " (" +
                     Col_Nr + " INTEGER PRIMARY KEY, "+
                     Col_child_ID + " INTEGER, " +
@@ -137,40 +137,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public Cursor findByID(int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent +
-                " WHERE " +Col_ID+" = "+id , null);
-        cursor.moveToFirst();
-        return cursor;
-    }
 
-    public Cursor findChildren(int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
-                " WHERE " +Col_parent_ID+" = "+id , null);
-        return cursor;
-    }
+    public abstract Cursor showData();
+    public abstract Cursor findDataById(int id);
+    public abstract boolean delete(int id);
 
-    public Cursor findParent (int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent +
-                " WHERE " +Col_ID+" = "+id , null);
-        return cursor;
-    }
-
-    public Cursor allTasks(){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Tasks , null);
-        return cursor;
-    }
-
-
-
-    public Cursor showData(){
-        return null;
-    }
-    protected Cursor findData(int id){
-        return null;
+    public boolean insertData(){
+        return false;
     }
 
     public Cursor ValidateByUserName(String username, String password) {
+        return  null;
+    }
+
+    public Cursor findByParentId(int anInt) {
         return  null;
     }
 }

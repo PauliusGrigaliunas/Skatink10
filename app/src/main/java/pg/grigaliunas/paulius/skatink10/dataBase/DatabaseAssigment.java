@@ -2,6 +2,7 @@ package pg.grigaliunas.paulius.skatink10.dataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 
 import java.util.Calendar;
 
@@ -21,5 +22,20 @@ public class DatabaseAssigment extends DatabaseHelper {
         long result = db.insert(Table_Assigment, null, contentValues);
         return (result == -1 )? false: true;
     }
+    @Override
+    public Cursor showData() {
+        return null;
+    }
+
+    @Override
+    public Cursor findDataById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
 
 }

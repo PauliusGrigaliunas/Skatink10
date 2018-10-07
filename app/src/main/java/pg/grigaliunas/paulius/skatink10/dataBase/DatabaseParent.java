@@ -9,6 +9,7 @@ public class DatabaseParent extends DatabaseHelper {
         super(context);
     }
 
+
     public boolean insertData(String userName, String password, String name, String surname, String email, String phone){
 
         ContentValues contentValues = new ContentValues();
@@ -21,6 +22,22 @@ public class DatabaseParent extends DatabaseHelper {
         long result = db.insert(Table_Parent, null, contentValues);
         return (result == -1 )? false: true;
     }
+
+    @Override
+    public Cursor showData() {
+        return null;
+    }
+
+    @Override
+    public Cursor findDataById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
     @Override
     public Cursor ValidateByUserName(String username, String password){
         Cursor c = db.rawQuery("SELECT * FROM " + Table_Parent +
