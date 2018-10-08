@@ -12,11 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import pg.grigaliunas.paulius.skatink10.R;
+import pg.grigaliunas.paulius.skatink10.UserData;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 
 public class MainChildActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private UserData userData = UserData.getInstance();
+    private TextView textView, fullNameText, EmailText;
+    public DatabaseHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,19 @@ public class MainChildActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setUser();
+    }
+
+    public void setUser(){
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+        fullNameText = header.findViewById(R.id.fullNameText);
+        EmailText = header.findViewById(R.id.EmailText);
+        fullNameText.setText(userData.getData().getString(1)+ " "
+                + userData.getData().getString(2));
+        EmailText.setText(userData.getData().getString(3));
     }
 
     @Override
