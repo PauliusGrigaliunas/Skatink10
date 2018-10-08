@@ -1,4 +1,4 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.parent;
 
 
 import android.content.Intent;
@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
 

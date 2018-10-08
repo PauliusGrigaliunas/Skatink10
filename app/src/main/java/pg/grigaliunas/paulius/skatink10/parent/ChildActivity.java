@@ -1,4 +1,4 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.parent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 

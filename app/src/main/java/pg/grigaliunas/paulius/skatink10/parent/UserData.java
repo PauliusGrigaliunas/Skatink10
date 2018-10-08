@@ -1,4 +1,4 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.parent;
 
 import android.database.Cursor;
 

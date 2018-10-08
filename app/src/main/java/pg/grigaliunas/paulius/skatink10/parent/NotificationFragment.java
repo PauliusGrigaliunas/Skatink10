@@ -1,4 +1,4 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.parent;
 
 
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pg.grigaliunas.paulius.skatink10.R;
 
 
 /**

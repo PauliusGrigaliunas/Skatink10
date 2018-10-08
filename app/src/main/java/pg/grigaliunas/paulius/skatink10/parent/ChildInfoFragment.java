@@ -1,8 +1,9 @@
-package pg.grigaliunas.paulius.skatink10;
+package pg.grigaliunas.paulius.skatink10.parent;
 
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
+import pg.grigaliunas.paulius.skatink10.parent.ChildFragment;
 
 
 /**
@@ -26,6 +29,7 @@ public class ChildInfoFragment extends Fragment {
     private Button deleteBtn, addPointsBtn;
     private EditText numberText;
     private TextView nameView;
+    private FloatingActionButton fab;
 
     public ChildInfoFragment() {
         // Required empty public constructor
@@ -41,14 +45,17 @@ public class ChildInfoFragment extends Fragment {
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
         numberText = (EditText) view.findViewById(R.id.numberText);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(3));
-        DeleteObject();
-        AddPoints();
+
+        deleteObject();
+        addPoints();
+        returnBack();
         return view;
     }
 
-    private void AddPoints() {
+    private void addPoints() {
         addPointsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,12 +65,6 @@ public class ChildInfoFragment extends Fragment {
 
                 if ( isUpdated == true) {
                     Toast.makeText(getActivity(), "Data added", Toast.LENGTH_LONG).show();
-                    /*Fragment fragment = new ChildFragment();
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.mainFrame, fragment);
-                    ft.commit();*/
-
-                    //addPoints();
                 }
                 else {
                     Toast.makeText(getActivity(), "Data not deleted", Toast.LENGTH_LONG).show();
@@ -72,7 +73,7 @@ public class ChildInfoFragment extends Fragment {
         });
     }
 
-    private void DeleteObject() {
+    private void deleteObject() {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,16 +81,28 @@ public class ChildInfoFragment extends Fragment {
 
                 if ( isDeleted == true) {
                     Toast.makeText(getActivity(), "Data deleted", Toast.LENGTH_LONG).show();
-                    Fragment fragment = new ChildFragment();
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    ft.replace(R.id.mainFrame, fragment);
-                    ft.commit();
+                    goBack();
                 }
                 else {
                     Toast.makeText(getActivity(), "Data not deleted", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void returnBack() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+    }
+    private void goBack() {
+        Fragment fragment = new ChildFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, fragment);
+        ft.commit();
     }
 
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
+import pg.grigaliunas.paulius.skatink10.parent.MainActivity;
+import pg.grigaliunas.paulius.skatink10.parent.UserData;
 
 public class LoginActivity extends AppCompatActivity {
 
