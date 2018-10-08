@@ -184,11 +184,11 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor findByParentId(int id) { return null;}
 
 
-    public Cursor ValidateByUserName(String username, String password){
+    public Cursor validateByUserName(String username, String password){
         return findByUserName(username, password);
     }
 
-    private Cursor findByUserName(String username, String password) {
+    public Cursor findByUserName(String username, String password) {
         Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
                 " WHERE " + Col_username + " ='" + username.trim() +
                 "' AND " + Col_password + " ='" + password.trim() + "'", null);

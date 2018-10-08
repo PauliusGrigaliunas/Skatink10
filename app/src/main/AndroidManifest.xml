@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pg.grigaliunas.paulius.skatink10">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +26,17 @@
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup" />
         <activity android:name=".parent.TaskActivity" />
-        <activity android:name=".parent.ChildActivity"></activity>
+        <activity android:name=".parent.ChildActivity" />
+        <activity
+            android:name=".child.MainChildActivity"
+            android:label="@string/title_activity_main_child"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

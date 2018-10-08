@@ -21,6 +21,7 @@ import java.util.HashMap;
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
+import pg.grigaliunas.paulius.skatink10.UserData;
 
 /**
  * A simple {@link Fragment} subclass.

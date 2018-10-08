@@ -12,7 +12,7 @@ public class DatabaseParent extends DatabaseHelper {
     public boolean insertData(String userName, String password, String name, String surname, String email, String phone){
         if( super.insertUserData(userName,password,name,true)) {
             ContentValues contentValues2 = new ContentValues();
-            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_user_ID, validateByUserName(userName, password).getInt(0));
             contentValues2.put(Col_surname, surname);
             contentValues2.put(Col_email, email);
             contentValues2.put(Col_phone, phone);
@@ -43,7 +43,7 @@ public class DatabaseParent extends DatabaseHelper {
     }
 
     @Override
-    public Cursor ValidateByUserName(String username, String password){
+    public Cursor validateByUserName(String username, String password){
         Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a" +
                 " INNER JOIN " + Table_Parent  +" on a." + Col_ID+  " = " + Col_user_ID +
                 " WHERE " +Col_username+ " ='"+username.trim()+

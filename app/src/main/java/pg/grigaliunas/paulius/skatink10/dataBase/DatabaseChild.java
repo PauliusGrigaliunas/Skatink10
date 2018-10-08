@@ -14,7 +14,7 @@ public class DatabaseChild extends DatabaseHelper {
 
         if( super.insertUserData(userName,password,name,true)) {
             ContentValues contentValues2 = new ContentValues();
-            contentValues2.put(Col_user_ID, ValidateByUserName(userName, password).getInt(0));
+            contentValues2.put(Col_user_ID, validateByUserName(userName, password).getInt(0));
             contentValues2.put(Col_parent_ID, parentID);
             contentValues2.put(Col_points, 0);
             return (db.insert(Table_Child, null, contentValues2) == -1 )? false: true;
@@ -23,7 +23,7 @@ public class DatabaseChild extends DatabaseHelper {
     }
 
     @Override
-    public Cursor ValidateByUserName(String username, String password){
+    public Cursor validateByUserName(String username, String password){
         Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a" +
                 " INNER JOIN " + Table_Child  +" on a." + Col_ID+  " = " + Col_user_ID +
                 " WHERE " +Col_username+ " ='"+username.trim()+

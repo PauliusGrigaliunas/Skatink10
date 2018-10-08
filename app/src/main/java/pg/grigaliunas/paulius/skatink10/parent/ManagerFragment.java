@@ -1,12 +1,9 @@
 package pg.grigaliunas.paulius.skatink10.parent;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +13,9 @@ import android.widget.Toast;
 
 import pg.grigaliunas.paulius.skatink10.LoginActivity;
 import pg.grigaliunas.paulius.skatink10.R;
-import pg.grigaliunas.paulius.skatink10.SignupActivity;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
-import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
+import pg.grigaliunas.paulius.skatink10.UserData;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +63,7 @@ public class ManagerFragment extends Fragment {
 
                 if ( isDeleted == true) {
                     Toast.makeText(getActivity(), "Data deleted", Toast.LENGTH_LONG).show();
+                    userData.clear();
                     goBack();
                 }
                 else {

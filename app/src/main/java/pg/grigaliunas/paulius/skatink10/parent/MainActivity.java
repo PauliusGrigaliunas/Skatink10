@@ -17,6 +17,7 @@ import android.widget.TextView;
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
+import pg.grigaliunas.paulius.skatink10.UserData;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.mainFrame, fragment);
             ft.commit();
         } else if (id == R.id.nav_exit) {
+            userData.clear();
             this.finish();
         }
 
