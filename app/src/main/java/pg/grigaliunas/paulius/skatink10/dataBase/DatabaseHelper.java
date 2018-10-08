@@ -180,32 +180,21 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     public abstract Cursor showData();
     public abstract Cursor findDataById(int id);
+    public abstract boolean delete(int id);
+    public Cursor findByParentId(int id) { return null;}
 
-    public  boolean delete(int id) {
-        int result = db.delete(Table_User, Col_ID + "=" + id, null);
-        return (result == 0) ? false : true;
-    }
 
     public Cursor ValidateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
-                " WHERE " +Col_username+ " ='"+username.trim()+
-                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
-        if (c.moveToFirst()) return c;
-        else return null;
-    }
-    public Cursor findByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
-                " WHERE " +Col_username+ " ='"+username.trim()+
-                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
-        if (c.moveToFirst()) return c;
-        else return null;
+        return findByUserName(username, password);
     }
 
-    public Cursor findByParentId(int id){
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User +" a" +
-                " INNER JOIN " + Table_Child  +" on a." + Col_ID+  " = " + Col_user_ID +
-                " WHERE " +Col_parent_ID+" = "+id , null);
-        return cursor;
+    private Cursor findByUserName(String username, String password) {
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +
+                " WHERE " + Col_username + " ='" + username.trim() +
+                "' AND " + Col_password + " ='" + password.trim() + "'", null);
+        if (c.moveToFirst()) return c;
+        else return null;
+
     }
 }
 

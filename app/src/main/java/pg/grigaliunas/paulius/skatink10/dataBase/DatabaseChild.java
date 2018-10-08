@@ -40,9 +40,10 @@ public class DatabaseChild extends DatabaseHelper {
 
     @Override
     public Cursor findDataById(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User +" a" +
-                " INNER JOIN " + Table_Child  +" on a." + Col_ID +  " = " + Col_user_ID +
-                " WHERE " +Col_ID+" = "+ id , null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User + " a" +
+                " INNER JOIN " + Table_Child + " on a." + Col_ID + " = " + Col_user_ID +
+                " WHERE a." + Col_ID + " = " + id, null);
+                cursor.moveToFirst();
         return cursor;
     }
 
@@ -53,5 +54,33 @@ public class DatabaseChild extends DatabaseHelper {
         return (result == 0) ? false : true;
     }
 
+    @Override
+    public Cursor findByParentId(int id) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User + " a" +
+                " INNER JOIN " + Table_Child + " on a." + Col_ID + " = " + Col_user_ID +
+                " WHERE " + Col_parent_ID + " = " + id, null);
+        cursor.moveToFirst();
+        return cursor;
 
+    }
+    public boolean addPoints (int id, int points) {
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
+                " WHERE " + Col_user_ID + " = " + id, null);
+        cursor.moveToFirst();
+
+
+        int sum = cursor.getInt(3) + points;
+        /*db.execSQL(" UPDATE " + Table_Child +" SET "+ Col_points + " = "+ Sum +" "
+                +" WHERE id= " + cursor.getInt(2) );*/
+
+
+
+
+        ContentValues newValues = new ContentValues();
+        newValues.put( Col_points, sum);
+
+        int result = db.update(Table_Child, newValues, Col_user_ID +" = " + cursor.getInt(2), null);
+        return (result == -1 )? false: true;
+
+    }
 }

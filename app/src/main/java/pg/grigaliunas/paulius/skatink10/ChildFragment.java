@@ -29,7 +29,7 @@ import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
  */
 public class ChildFragment extends Fragment {
 
-    private DatabaseHelper mydb;
+    private DatabaseChild mydb;
     private UserData userData = UserData.getInstance();
     private ListView listView;
     private FloatingActionButton fab;
@@ -88,7 +88,7 @@ public class ChildFragment extends Fragment {
                 hmap= new HashMap<String, String>();
                 hmap.put("id", c.getString(0));
                 hmap.put("name", c.getString(3));
-                hmap.put("points",c.getString(4));
+                hmap.put("points",c.getString(8));
                 arrayList.add(hmap);
             }
         }

@@ -17,6 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     private DatabaseHelper mydb;
     private EditText username, password;
     private Button loginBtn, signupBtn;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.passwordText1);
         loginBtn = (Button) findViewById(R.id.loginButton);
         signupBtn = (Button) findViewById(R.id.signupButton);
+        tv = (TextView) findViewById(R.id.warningText);
         openMainWindow();
         openSignupWindow();
     }
@@ -35,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tv = (TextView) findViewById(R.id.warningText);
                 Cursor cursor = mydb.ValidateByUserName(String.valueOf(username.getText()), password.getText().toString());
                 if( cursor!= null){
                     UserData userData = UserData.getInstance();
