@@ -87,8 +87,8 @@ public class ChildFragment extends Fragment {
             {
                 hmap= new HashMap<String, String>();
                 hmap.put("id", c.getString(0));
-                hmap.put("name", c.getString(4));
-                hmap.put("points",c.getString(5));
+                hmap.put("name", c.getString(3));
+                hmap.put("points",c.getString(4));
                 arrayList.add(hmap);
             }
         }

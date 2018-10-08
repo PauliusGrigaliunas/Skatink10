@@ -40,22 +40,18 @@ public class DatabaseChild extends DatabaseHelper {
 
     @Override
     public Cursor findDataById(int id) {
-        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User +" a" +
+                " INNER JOIN " + Table_Child  +" on a." + Col_ID +  " = " + Col_user_ID +
                 " WHERE " +Col_ID+" = "+ id , null);
         return cursor;
     }
 
     @Override
     public boolean delete(int id) {
-        int result = db.delete(Table_Child, Col_ID + "=" + id, null);
-        if (result != 0 ) return super.delete(id);
-        else return  false;
+        int result = db.delete(Table_Child, Col_user_ID + "=" + id, null);
+        result += db.delete(Table_User, Col_ID + "=" + id, null);
+        return (result == 0) ? false : true;
     }
 
-    @Override
-    public Cursor findByParentId(int id){
-    Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
-            " WHERE " +Col_parent_ID+" = "+id , null);
-        return cursor;
-    }
+
 }

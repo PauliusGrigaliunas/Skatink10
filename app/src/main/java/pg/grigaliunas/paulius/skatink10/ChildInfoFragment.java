@@ -44,7 +44,7 @@ public class ChildInfoFragment extends Fragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isDeleted =mydb.delete(id);
+                boolean isDeleted = mydb.delete(id);
 
                 if ( isDeleted == true) {
                     Toast.makeText(getActivity(), "Data deleted", Toast.LENGTH_LONG).show();
