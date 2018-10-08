@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         setUser();
+        Home();
     }
 
     public void setUser(){
@@ -121,16 +122,30 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.mainFrame, fragment);
             ft.commit();
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            fragment = new ManagerFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_info) {
+            fragment = new InfoFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_exit) {
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void Home(){
+        Fragment fragment;
+        fragment = new HomeFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, fragment);
+        ft.commit();
     }
 
 }

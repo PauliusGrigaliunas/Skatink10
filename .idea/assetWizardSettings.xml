@@ -34,7 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Paulius\Pictures\Saved Pictures\2x\baseline_child_care_black_18dp.png" />
+                                      <entry key="imageAsset" value="C:\Users\Paulius\Pictures\Saved Pictures\2x\baseline_info_black_18dp.png" />
+                                      <entry key="outputName" value="ic_action_info" />
                                     </map>
                                   </option>
                                 </PersistentState>

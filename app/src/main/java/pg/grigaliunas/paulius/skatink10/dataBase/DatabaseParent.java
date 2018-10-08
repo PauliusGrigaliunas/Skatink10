@@ -37,7 +37,7 @@ public class DatabaseParent extends DatabaseHelper {
 
     @Override
     public boolean delete(int id) {
-        int result = db.delete(Table_Child, Col_user_ID + "=" + id, null);
+        int result = db.delete(Table_Parent, Col_user_ID + "=" + id, null);
         result += db.delete(Table_User, Col_ID + "=" + id, null);
         return (result == 0) ? false : true;
     }
