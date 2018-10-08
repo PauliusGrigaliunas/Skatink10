@@ -68,13 +68,7 @@ public class DatabaseChild extends DatabaseHelper {
                 " WHERE " + Col_user_ID + " = " + id, null);
         cursor.moveToFirst();
 
-
         int sum = cursor.getInt(3) + points;
-        /*db.execSQL(" UPDATE " + Table_Child +" SET "+ Col_points + " = "+ Sum +" "
-                +" WHERE id= " + cursor.getInt(2) );*/
-
-
-
 
         ContentValues newValues = new ContentValues();
         newValues.put( Col_points, sum);

@@ -6,10 +6,12 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -96,5 +98,27 @@ public class TaskFragment extends Fragment {
                 from, to );
 
         listView.setAdapter(adapter);
+
+        selectItemFromList();
+    }
+    private void selectItemFromList() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                HashMap element = (HashMap) arrayList.get(position);
+
+                int name = Integer.parseInt(element.get("id").toString());
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("data", name);
+
+                Fragment fragment = new TaskInfoFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, fragment);
+                ft.commit();
+            }
+        });
     }
 }
