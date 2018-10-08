@@ -59,9 +59,9 @@ public class MainChildActivity extends AppCompatActivity
         View header=navigationView.getHeaderView(0);
         fullNameText = header.findViewById(R.id.fullNameText);
         EmailText = header.findViewById(R.id.EmailText);
-        fullNameText.setText(userData.getData().getString(1)+ " "
-                + userData.getData().getString(2));
-        EmailText.setText(userData.getData().getString(3));
+        fullNameText.setText(userData.getData().getString(3)+ " "
+                + userData.getData().getString(11));
+        EmailText.setText(userData.getData().getString(12));
     }
 
     @Override

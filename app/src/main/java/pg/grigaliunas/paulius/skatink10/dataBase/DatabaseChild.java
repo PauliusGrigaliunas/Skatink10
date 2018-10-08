@@ -24,14 +24,14 @@ public class DatabaseChild extends DatabaseHelper {
 
     @Override
     public Cursor validateByUserName(String username, String password){
-        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a" +
-                " INNER JOIN " + Table_Child  +" on a." + Col_ID+  " = " + Col_user_ID +
-                " WHERE " +Col_username+ " ='"+username.trim()+
-                "' AND " +Col_password+ " ='"+password.trim()+"'" , null);
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_User +" a " +
+                " INNER JOIN " + Table_Child + " b " +" on a." + Col_ID +  " = b." + Col_user_ID +
+                " INNER JOIN " + Table_Parent + " c " +" on b." + Col_parent_ID + " = c." + Col_ID +
+                " WHERE a." +Col_username+ " ='"+username.trim()+
+                "' AND a." +Col_password+ " ='"+password.trim()+"'" , null);
         if (c.moveToFirst()) return c;
         else return null;
     }
-
     @Override
     public Cursor showData(){
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child , null);

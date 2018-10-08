@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pg.grigaliunas.paulius.skatink10.child.MainChildActivity;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
 import pg.grigaliunas.paulius.skatink10.parent.MainActivity;
@@ -26,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mydb = new DatabaseParent(this);
-        childb = new DatabaseParent(this);
+        childb = new DatabaseChild(this);
         username = (EditText) findViewById(R.id.usernameText1);
         password = (EditText) findViewById(R.id.passwordText1);
         loginBtn = (Button) findViewById(R.id.loginButton);
