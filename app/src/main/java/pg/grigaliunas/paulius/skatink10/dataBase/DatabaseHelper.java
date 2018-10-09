@@ -84,6 +84,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                     Col_parent_ID + " INTEGER, " +
                     Col_child_ID + " INTEGER, " +
                     Col_text + " text, " +
+                    Col_points + " INTEGER, " +
                     Col_date + " text, " +
                     "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Child  + "("+Col_ID+")," +
                     "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
@@ -155,13 +156,14 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public boolean insertEmailData(int senderID, int receiverID, String text){
+    public boolean insertEmailData(int senderID, int receiverID, String text, int points){
 
         Calendar cal = Calendar.getInstance();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_child_ID, senderID);
         contentValues.put(Col_parent_ID, receiverID);
         contentValues.put(Col_text, text);
+        contentValues.put(Col_points, points);
         contentValues.put(Col_date, cal.getTime().toString());
         long result = db.insert(Table_Email, null, contentValues);
         return (result == -1 )? false: true;

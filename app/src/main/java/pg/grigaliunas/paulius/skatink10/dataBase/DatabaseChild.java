@@ -43,7 +43,6 @@ public class DatabaseChild extends DatabaseHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User + " a" +
                 " INNER JOIN " + Table_Child + " on a." + Col_ID + " = " + Col_user_ID +
                 " WHERE a." + Col_ID + " = " + id, null);
-                cursor.moveToFirst();
         return cursor;
     }
 
@@ -59,7 +58,6 @@ public class DatabaseChild extends DatabaseHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_User + " a" +
                 " INNER JOIN " + Table_Child + " on a." + Col_ID + " = " + Col_user_ID +
                 " WHERE " + Col_parent_ID + " = " + id, null);
-        cursor.moveToFirst();
         return cursor;
 
     }
