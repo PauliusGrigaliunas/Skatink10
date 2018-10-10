@@ -91,12 +91,12 @@ public class NotificationFragment extends Fragment {
 
                 HashMap element = (HashMap) arrayList.get(position);
 
-                int name =  Integer.parseInt(element.get("id").toString());
+                int emailId =  Integer.parseInt(element.get("id").toString());
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("data",name);
+                bundle.putInt("data",emailId);
 
-                Fragment fragment = new ChildInfoFragment();
+                Fragment fragment = new NotificationInfoFragment();
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, fragment);
