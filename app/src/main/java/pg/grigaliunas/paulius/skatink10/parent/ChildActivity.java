@@ -29,7 +29,7 @@ public class ChildActivity extends AppCompatActivity {
 
         usernameText = (EditText) findViewById(R.id.usernameText);
         passwordText = (EditText) findViewById(R.id.passwordText);
-        nameText = (EditText) findViewById(R.id.nameText);
+        nameText = (EditText) findViewById(R.id.taskText);
         addChildBtn = (Button) findViewById(R.id.addChildBtn);
         AddData();
         getSupportActionBar().setDisplayShowHomeEnabled(true);

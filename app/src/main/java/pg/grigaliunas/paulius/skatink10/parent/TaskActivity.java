@@ -24,7 +24,7 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
 
         mydb = new DatabaseTask(this);
-        name = (EditText) findViewById(R.id.nameText);
+        name = (EditText) findViewById(R.id.taskText);
         point = (EditText) findViewById(R.id.pointText);
         addTaskBtn = (Button) findViewById(R.id.addButton);
         createTask();

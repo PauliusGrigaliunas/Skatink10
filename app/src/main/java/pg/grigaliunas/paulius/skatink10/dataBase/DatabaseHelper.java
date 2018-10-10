@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Skatink.db";
@@ -146,11 +148,13 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertAssigmentData(int childID, int taskNR, boolean confirmed ){
 
-        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_user_ID, childID);
         contentValues.put(Col_task_NR, taskNR);
-        contentValues.put(Col_date, cal.getTime().toString());
+        contentValues.put(Col_date, strDate);
         contentValues.put(Col_confirmed, confirmed);
         long result = db.insert(Table_Assigment, null, contentValues);
         return (result == -1 )? false: true;
@@ -158,13 +162,15 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertEmailData(int senderID, int receiverID, String text, int points){
 
-        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_child_ID, senderID);
         contentValues.put(Col_parent_ID, receiverID);
         contentValues.put(Col_text, text);
         contentValues.put(Col_points, points);
-        contentValues.put(Col_date, cal.getTime().toString());
+        contentValues.put(Col_date, strDate);
         long result = db.insert(Table_Email, null, contentValues);
         return (result == -1 )? false: true;
     }

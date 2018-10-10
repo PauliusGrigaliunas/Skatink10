@@ -98,7 +98,7 @@ public class ChildFragment extends Fragment {
         }
 
         String from[]={"id","name","points"};
-        int to[] = {R.id.idText, R.id.nameText, R.id.pointText};
+        int to[] = {R.id.idText, R.id.taskText, R.id.pointText};
 
         SimpleAdapter adapter = new SimpleAdapter(
                 getContext(),

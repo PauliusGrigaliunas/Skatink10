@@ -23,7 +23,8 @@ public class DatabaseParent extends DatabaseHelper {
 
     @Override
     public Cursor showData() {
-        return null;
+        Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Parent , null);
+        return cursor;
     }
 
     @Override
