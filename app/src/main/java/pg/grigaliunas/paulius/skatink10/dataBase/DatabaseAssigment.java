@@ -29,7 +29,10 @@ public class DatabaseAssigment extends DatabaseHelper {
 
     @Override
     public Cursor findDataById(int id) {
-        return null;
+        Cursor c = db.rawQuery("SELECT * FROM " + Table_Assignment+
+                " WHERE " +Col_child_ID+" = "+ id  , null);
+        if (c.moveToFirst()) return c;
+        else return null;
     }
 
     @Override

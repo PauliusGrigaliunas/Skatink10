@@ -24,10 +24,10 @@ import pg.grigaliunas.paulius.skatink10.parent.ChildFragment;
  */
 public class ChildInfoFragment extends Fragment {
 
-    private DatabaseChild mydb;
+    private DatabaseChild mydb, assignDb;
     private int id;
     private Button deleteBtn, addPointsBtn;
-    private EditText numberText;
+    private EditText numberText, editText;
     private TextView nameView;
     private FloatingActionButton fab;
 
@@ -40,10 +40,12 @@ public class ChildInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_child_info, container, false);
         mydb = new DatabaseChild(getActivity());
+        assignDb = new DatabaseChild(getActivity());
         id = getArguments().getInt("data");
         deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
+        numberText = (EditText) view.findViewById(R.id.numberText);
         numberText = (EditText) view.findViewById(R.id.numberText);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Cursor cursor = mydb.findDataById(id);
