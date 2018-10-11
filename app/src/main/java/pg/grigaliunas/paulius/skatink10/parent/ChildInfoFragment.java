@@ -38,9 +38,9 @@ public class ChildInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_child_info, container, false);
         mydb = new DatabaseChild(getActivity());
         id = getArguments().getInt("data");
-        View view = inflater.inflate(R.layout.fragment_child_info, container, false);
         deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
@@ -67,7 +67,7 @@ public class ChildInfoFragment extends Fragment {
                     Toast.makeText(getActivity(), "Data added", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(getActivity(), "Data not deleted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Data not added", Toast.LENGTH_LONG).show();
                 }
             }
         });

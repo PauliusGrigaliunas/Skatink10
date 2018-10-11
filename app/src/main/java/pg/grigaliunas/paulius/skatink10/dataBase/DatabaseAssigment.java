@@ -19,7 +19,7 @@ public class DatabaseAssigment extends DatabaseHelper {
         contentValues.put(Col_task_NR, taskNR);
         contentValues.put(Col_date, cal.getTime().toString());
         contentValues.put(Col_confirmed, confirmed);
-        long result = db.insert(Table_Assigment, null, contentValues);
+        long result = db.insert(Table_Assignment, null, contentValues);
         return (result == -1 )? false: true;
     }
     @Override
@@ -34,7 +34,8 @@ public class DatabaseAssigment extends DatabaseHelper {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        int result = db.delete(Table_Assignment, Col_ID + "=" + id, null);
+        return (result == 0) ? false : true;
     }
 
 }

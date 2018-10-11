@@ -61,6 +61,7 @@ public class DatabaseChild extends DatabaseHelper {
         return cursor;
 
     }
+    @Override
     public boolean addPoints (int id, int points) {
         Cursor cursor = db.rawQuery("SELECT * FROM " + Table_Child +
                 " WHERE " + Col_user_ID + " = " + id, null);
@@ -73,6 +74,5 @@ public class DatabaseChild extends DatabaseHelper {
 
         int result = db.update(Table_Child, newValues, Col_user_ID +" = " + cursor.getInt(2), null);
         return (result == -1 )? false: true;
-
     }
 }

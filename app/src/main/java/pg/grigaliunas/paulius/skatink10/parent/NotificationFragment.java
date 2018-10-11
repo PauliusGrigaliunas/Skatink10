@@ -32,6 +32,8 @@ public class NotificationFragment extends Fragment {
     private ArrayList arrayList;
     private HashMap<String, String> hmap;
     private UserData userData = UserData.getInstance();
+    private Cursor cursor;
+    private int childId;
 
 
     public NotificationFragment() {
@@ -53,17 +55,18 @@ public class NotificationFragment extends Fragment {
         arrayList = new ArrayList<HashMap<String,String>>();
         try{
 
-            Cursor c = mydb.findByParentId(userData.getData().getInt(0));
+            cursor = mydb.findByParentId(userData.getData().getInt(0));
 
 
-            while(c.moveToNext())
+            while(cursor.moveToNext())
             {
                 hmap= new HashMap<String, String>();
-                hmap.put("id", c.getString(0));
-                hmap.put("name", c.getString(9));
-                hmap.put("task", c.getString(3));
-                hmap.put("points",c.getString(4));
+                hmap.put("nr", cursor.getString(0));
+                hmap.put("name", cursor.getString(9));
+                hmap.put("task", cursor.getString(3));
+                hmap.put("points", cursor.getString(4));
                 arrayList.add(hmap);
+                childId = cursor.getInt(6);
             }
         }
         catch(Exception e){
@@ -71,7 +74,7 @@ public class NotificationFragment extends Fragment {
 
         }
 
-        String from[]={"id","name", "task","points"};
+        String from[]={"nr","name", "task","points"};
         int to[] = {R.id.idText, R.id.nameText, R.id.taskText, R.id.pointText};
 
         SimpleAdapter adapter = new SimpleAdapter(
@@ -91,10 +94,13 @@ public class NotificationFragment extends Fragment {
 
                 HashMap element = (HashMap) arrayList.get(position);
 
-                int emailId =  Integer.parseInt(element.get("id").toString());
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("data",emailId);
+                bundle.putInt("id", childId);
+                bundle.putInt("nr", Integer.parseInt(element.get("nr").toString()));
+                bundle.putString("name", element.get("name").toString());
+                bundle.putString("task",element.get("task").toString());
+                bundle.putInt("points",Integer.parseInt(element.get("points").toString()));
 
                 Fragment fragment = new NotificationInfoFragment();
                 fragment.setArguments(bundle);

@@ -41,7 +41,7 @@ public class DatabaseEmail extends DatabaseHelper {
 
     @Override
     public boolean delete(int id) {
-        int result = db.delete(Table_Email, Col_ID + "=" + id, null);
+        int result = db.delete(Table_Email, Col_Nr + "=" + id, null);
         return (result == 0) ? false : true;
     }
 

@@ -19,7 +19,6 @@ import android.widget.TextView;
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.UserData;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
-import pg.grigaliunas.paulius.skatink10.parent.HomeFragment;
 
 public class MainChildActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -108,20 +107,27 @@ public class MainChildActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
+            fragment = new ChildHomeFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainChild, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_history) {
+            fragment = new HistoryFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainChild, fragment);
+            ft.commit();
+        } else if (id == R.id.nav_register_points) {
             fragment = new CollectPointsFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainChild, fragment);
             ft.commit();
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_info) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_exit) {
+            userData.clear();
+            this.finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

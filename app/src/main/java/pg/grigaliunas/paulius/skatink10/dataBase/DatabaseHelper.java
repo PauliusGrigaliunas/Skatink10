@@ -17,7 +17,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Table_Child = "child";
     public static final String Table_Tasks = "tasks";
     public static final String Table_Email = "email";
-    public static final String Table_Assigment = "assigment";
+    public static final String Table_Assignment = "assignment";
     public static final String Col_ID = "ID";
     public static final String Col_Nr = "Nr";
     public static final String Col_username = "username";
@@ -70,14 +70,14 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                     Col_points + " INTEGER) ";
 
     protected  final String CreateAssigmentTable =
-            "Create Table " + Table_Assigment+ " (" +
+            "Create Table " + Table_Assignment+ " (" +
                     Col_Nr + " INTEGER PRIMARY KEY, "+
                     Col_child_ID + " INTEGER, " +
                     Col_task_NR + " INTEGER, " +
                     Col_date + " text, " +
                     Col_confirmed + " BOOLEAN, " +
-                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Child  + "("+Col_ID+")," +
-                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
+                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_User  + "("+Col_ID+")," +
+                    "FOREIGN KEY("+Col_task_NR+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
 
 
     protected  final String CreateEmailTable =
@@ -88,8 +88,8 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                     Col_text + " text, " +
                     Col_points + " INTEGER, " +
                     Col_date + " text, " +
-                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Child  + "("+Col_ID+")," +
-                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
+                    "FOREIGN KEY("+Col_parent_ID+") REFERENCES " + Table_User  + "("+Col_ID+")," +
+                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_User  + "("+Col_ID+"))";
 
     public DatabaseHelper(Context context) {
         super(context,DATABASE_NAME, null, 1);
@@ -108,7 +108,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("Drop Table if Exists " + Table_Email );
-        db.execSQL("Drop Table if Exists " + Table_Assigment );
+        db.execSQL("Drop Table if Exists " + Table_Assignment );
         db.execSQL("Drop Table if Exists " + Table_Tasks );
         db.execSQL("Drop Table if Exists " + Table_Parent );
         db.execSQL("Drop Table if Exists " + Table_Child );
@@ -146,17 +146,17 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public boolean insertAssigmentData(int childID, int taskNR, boolean confirmed ){
+    public boolean insertAssignmentData(int childID, int taskNR, boolean confirmed ){
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
         String strDate = sdfDate.format(now);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(Col_user_ID, childID);
+        contentValues.put(Col_child_ID, childID);
         contentValues.put(Col_task_NR, taskNR);
         contentValues.put(Col_date, strDate);
         contentValues.put(Col_confirmed, confirmed);
-        long result = db.insert(Table_Assigment, null, contentValues);
+        long result = db.insert(Table_Assignment, null, contentValues);
         return (result == -1 )? false: true;
     }
 
@@ -204,5 +204,6 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         else return null;
 
     }
+    public boolean addPoints (int id, int points){return false;}
 }
 
