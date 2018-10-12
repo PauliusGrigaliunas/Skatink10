@@ -57,7 +57,7 @@ public class NotificationInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-               // Toast.makeText(getActivity(), name , Toast.LENGTH_LONG).show();
+
                 boolean isInserted = mydb.insertAssignmentData(childId, task, points, true);
 
                 if ( isInserted == true) {

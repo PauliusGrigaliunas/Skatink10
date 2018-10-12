@@ -1,5 +1,6 @@
 package pg.grigaliunas.paulius.skatink10.parent;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ public class ChildActivity extends AppCompatActivity {
     private UserData userData = UserData.getInstance();
     private Button addChildBtn;
     private EditText usernameText, passwordText, nameText;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +33,11 @@ public class ChildActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.passwordText);
         nameText = (EditText) findViewById(R.id.taskText);
         addChildBtn = (Button) findViewById(R.id.addChildBtn);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         AddData();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        returnBack();
 
     }
     public void AddData() {
@@ -61,5 +65,18 @@ public class ChildActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == android.R.id.home) this.finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void returnBack() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+    }
+
+    private void goBack() {
+        this.finish();
     }
 }

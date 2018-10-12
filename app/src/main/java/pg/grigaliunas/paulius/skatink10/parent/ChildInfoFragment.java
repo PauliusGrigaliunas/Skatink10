@@ -46,7 +46,7 @@ public class ChildInfoFragment extends Fragment {
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
         numberText = (EditText) view.findViewById(R.id.numberText);
-        numberText = (EditText) view.findViewById(R.id.numberText);
+        editText = (EditText) view.findViewById(R.id.editText);
         fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(3));
@@ -62,7 +62,7 @@ public class ChildInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                boolean isInserted = mydb.insertAssignmentData(id, "blogai elgesi",
+                boolean isInserted = mydb.insertAssignmentData(id, editText.getText().toString(),
                         Integer.parseInt(numberText.getText().toString()), true);
                 boolean isUpdated = mydb.addPoints(id, Integer.parseInt(numberText.getText().toString()));
 

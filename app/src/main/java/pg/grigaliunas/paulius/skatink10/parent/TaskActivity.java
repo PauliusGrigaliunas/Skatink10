@@ -1,5 +1,8 @@
 package pg.grigaliunas.paulius.skatink10.parent;
 
+import android.app.FragmentTransaction;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,6 +20,7 @@ public class TaskActivity extends AppCompatActivity {
     public DatabaseHelper mydb;
     private EditText name, point;
     private Button addTaskBtn;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +31,11 @@ public class TaskActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.taskText);
         point = (EditText) findViewById(R.id.pointText);
         addTaskBtn = (Button) findViewById(R.id.addButton);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         createTask();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        returnBack();
     }
 
     private void createTask() {
@@ -55,5 +61,18 @@ public class TaskActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == android.R.id.home) this.finish();
         return super.onOptionsItemSelected(item);
+    }
+
+    private void returnBack() {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBack();
+            }
+        });
+    }
+
+    private void goBack() {
+        this.finish();
     }
 }
