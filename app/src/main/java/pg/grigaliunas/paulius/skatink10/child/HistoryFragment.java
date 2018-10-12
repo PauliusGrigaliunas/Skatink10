@@ -59,9 +59,9 @@ public class HistoryFragment extends Fragment {
             {
                 hmap= new HashMap<String, String>();
                 hmap.put("id", c.getString(0));
-                hmap.put("name", c.getString(3));
-                hmap.put("time", c.getString(3));
-                hmap.put("points",c.getString(4));
+                hmap.put("name", c.getString(2));
+                hmap.put("time", c.getString(4));
+                hmap.put("points",c.getString(3));
                 arrayList.add(hmap);
             }
         }
@@ -70,7 +70,7 @@ public class HistoryFragment extends Fragment {
 
         }
 
-        String from[]={"name","time","points"};
+        String from[]={"time","name","points"};
         int to[] = {R.id.idText, R.id.taskText, R.id.pointText};
 
         SimpleAdapter adapter = new SimpleAdapter(

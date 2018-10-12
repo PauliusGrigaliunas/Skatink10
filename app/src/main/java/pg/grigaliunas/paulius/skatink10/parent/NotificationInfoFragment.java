@@ -58,7 +58,7 @@ public class NotificationInfoFragment extends Fragment {
             public void onClick(View v) {
 
                // Toast.makeText(getActivity(), name , Toast.LENGTH_LONG).show();
-                boolean isInserted = mydb.insertAssignmentData(childId, nr, true);
+                boolean isInserted = mydb.insertAssignmentData(childId, task, points, true);
 
                 if ( isInserted == true) {
                     boolean isUpdated = childDb.addPoints(childId, points);
@@ -77,15 +77,7 @@ public class NotificationInfoFragment extends Fragment {
         rejectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean isInserted = mydb.insertAssignmentData(childId, nr, false);
-                if ( isInserted == true) {
-                    Toast.makeText(getActivity(), "Data added", Toast.LENGTH_LONG).show();
-                    goBack();
-                }
-                else {
-                    Toast.makeText(getActivity(), "Data not added", Toast.LENGTH_LONG).show();
-                }
+                goBack();
             }
         });
     }

@@ -62,7 +62,8 @@ public class ChildInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
+                boolean isInserted = mydb.insertAssignmentData(id, "blogai elgesi",
+                        Integer.parseInt(numberText.getText().toString()), true);
                 boolean isUpdated = mydb.addPoints(id, Integer.parseInt(numberText.getText().toString()));
 
                 if ( isUpdated == true) {

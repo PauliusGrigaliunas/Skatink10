@@ -73,11 +73,11 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
             "Create Table " + Table_Assignment+ " (" +
                     Col_Nr + " INTEGER PRIMARY KEY, "+
                     Col_child_ID + " INTEGER, " +
-                    Col_task_NR + " INTEGER, " +
+                    Col_name + " text, " +
+                    Col_points + " INTEGER, " +
                     Col_date + " text, " +
                     Col_confirmed + " BOOLEAN, " +
-                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_User  + "("+Col_ID+")," +
-                    "FOREIGN KEY("+Col_task_NR+") REFERENCES " + Table_Tasks  + "("+Col_Nr+"))";
+                    "FOREIGN KEY("+Col_child_ID+") REFERENCES " + Table_User  + "("+Col_ID+"))";
 
 
     protected  final String CreateEmailTable =
@@ -146,14 +146,15 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         return (result == -1 )? false: true;
     }
 
-    public boolean insertAssignmentData(int childID, int taskNR, boolean confirmed ){
+    public boolean insertAssignmentData(int childID, String name, int taskNR, boolean confirmed ){
 
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
         String strDate = sdfDate.format(now);
         ContentValues contentValues = new ContentValues();
         contentValues.put(Col_child_ID, childID);
-        contentValues.put(Col_task_NR, taskNR);
+        contentValues.put(Col_name, name);
+        contentValues.put(Col_points, taskNR);
         contentValues.put(Col_date, strDate);
         contentValues.put(Col_confirmed, confirmed);
         long result = db.insert(Table_Assignment, null, contentValues);
