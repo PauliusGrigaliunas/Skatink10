@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                         cursor = mydb.validateByUserName(String.valueOf(username.getText()), password.getText().toString());
                         UserData userData = UserData.getInstance();
                         userData.setData(cursor);
+
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     }
                     else {

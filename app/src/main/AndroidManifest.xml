@@ -7,13 +7,13 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/log_in"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".parent.MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/parent"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -24,12 +24,12 @@
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:label="@string/title_activity_signup" />
+            android:label="@string/sign_up" />
         <activity android:name=".parent.TaskActivity" />
         <activity android:name=".parent.ChildActivity" />
         <activity
             android:name=".child.MainChildActivity"
-            android:label="@string/title_activity_main_child"
+            android:label="@string/child"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
