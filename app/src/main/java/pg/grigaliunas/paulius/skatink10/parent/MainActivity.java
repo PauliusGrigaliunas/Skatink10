@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pg.grigaliunas.paulius.skatink10.InfoFragment;
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;

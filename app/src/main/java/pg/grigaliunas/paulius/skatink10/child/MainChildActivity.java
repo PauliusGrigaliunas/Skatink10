@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pg.grigaliunas.paulius.skatink10.InfoFragment;
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.UserData;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
@@ -121,9 +122,12 @@ public class MainChildActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainChild, fragment);
             ft.commit();
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_info) {
+
+            fragment = new InfoFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainChild, fragment);
+            ft.commit();
 
         } else if (id == R.id.nav_exit) {
             userData.clear();
