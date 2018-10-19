@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -33,6 +36,7 @@ public class TaskFragment extends Fragment {
     private ListView listView;
     private ArrayList arrayList;
     private HashMap<String, String> hmap;
+
     FloatingActionButton fab;
     public TaskFragment() {
         // Required empty public constructor
@@ -50,8 +54,10 @@ public class TaskFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.listView);
         showList();
 
+
         return view;
     }
+
 
     @Override
     public void onResume() {

@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +29,7 @@ public class ChildInfoFragment extends Fragment {
 
     private DatabaseChild mydb, assignDb;
     private int id;
-    private Button deleteBtn, addPointsBtn;
+    private Button deleteBtn, addPointsBtn, NamBarBtnVar;
     private EditText numberText, editText;
     private TextView nameView;
     private FloatingActionButton fab;
@@ -38,7 +41,9 @@ public class ChildInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_child_info, container, false);
+       // View rootView = inflater.inflate(R.layout.activity_main, container, false);
         mydb = new DatabaseChild(getActivity());
         assignDb = new DatabaseChild(getActivity());
         id = getArguments().getInt("data");
@@ -51,10 +56,27 @@ public class ChildInfoFragment extends Fragment {
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(3));
 
+
+
+        changeToolBar();
+
+
         deleteObject();
         addPoints();
         returnBack();
         return view;
+    }
+
+    private void changeToolBar(){
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setSubtitle("Child info");
+
+        NamBarBtnVar = new Button(getActivity());
+        NamBarBtnVar.setText("delete");
+        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity=Gravity.END;
+        toolbar.addView(NamBarBtnVar, layoutParams);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
     private void addPoints() {
@@ -77,7 +99,7 @@ public class ChildInfoFragment extends Fragment {
     }
 
     private void deleteObject() {
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        NamBarBtnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isDeleted = mydb.delete(id);

@@ -9,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class TaskInfoFragment extends Fragment {
     private DatabaseTask mydb;
     
     private int id;
-    private Button deleteBtn, addPointsBtn;
+    private Button deleteBtn, addPointsBtn, NamBarBtnVar;
     private EditText numberText;
     private TextView nameView;
     private FloatingActionButton fab;
@@ -56,18 +57,26 @@ public class TaskInfoFragment extends Fragment {
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(1));
 
-        //toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //toolbar.setTitle("delete");
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
+        changeToolBar();
         deleteObject();
         addPoints();
         returnBack();
         return view;
     }
+
+    private void changeToolBar(){
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar.setSubtitle("Task info");
+
+        NamBarBtnVar = new Button(getActivity());
+        NamBarBtnVar.setText("delete");
+        android.support.v7.widget.Toolbar.LayoutParams layoutParams = new android.support.v7.widget.Toolbar.LayoutParams(android.support.v7.widget.Toolbar.LayoutParams.WRAP_CONTENT, android.support.v7.widget.Toolbar.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity=Gravity.END;
+        toolbar.addView(NamBarBtnVar, layoutParams);
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+    }
+
 
     private void addPoints() {
         addPointsBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +97,7 @@ public class TaskInfoFragment extends Fragment {
     }
 
     private void deleteObject() {
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        NamBarBtnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isDeleted = mydb.delete(id);

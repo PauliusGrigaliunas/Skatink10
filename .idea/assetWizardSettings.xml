@@ -34,8 +34,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Paulius\Pictures\Saved Pictures\2x\baseline_assignment_black_18dp.png" />
-                                      <entry key="outputName" value="ic_action_assingment" />
+                                      <entry key="imageAsset" value="C:\Users\Paulius\Pictures\Saved Pictures\2x\baseline_delete_black_18dp.png" />
+                                      <entry key="outputName" value="ic_action_delete" />
                                     </map>
                                   </option>
                                 </PersistentState>
