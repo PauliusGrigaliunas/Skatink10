@@ -2,10 +2,14 @@ package pg.grigaliunas.paulius.skatink10;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
+import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -18,16 +22,20 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        mydb = new DatabaseHelper(this);
+        mydb = new DatabaseParent(this);
 
-        username = (EditText) findViewById(R.id.usernameText);
-        password = (EditText) findViewById(R.id.passwordText);
+        username = (EditText) findViewById(R.id.usernameText1);
+        password = (EditText) findViewById(R.id.passwordText1);
         name = (EditText) findViewById(R.id.fullNameText);
         surname = (EditText) findViewById(R.id.surnameText);
         email = (EditText) findViewById(R.id.emailText);
         phone = (EditText) findViewById(R.id.phoneText);
         addbtn = (Button) findViewById(R.id.addBtn);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         AddData();
+
     }
 
     public void AddData(){
@@ -41,8 +49,7 @@ public class SignupActivity extends AppCompatActivity {
                                 name.getText().toString(),
                                 surname.getText().toString(),
                                 email.getText().toString(),
-                                phone.getText().toString()
-                        );
+                                phone.getText().toString());
                         if (isInserted == true) {
                             Toast.makeText(SignupActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                         }
@@ -54,4 +61,12 @@ public class SignupActivity extends AppCompatActivity {
                 }
         );
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home) this.finish();
+        return super.onOptionsItemSelected(item);
+    }
 }
+

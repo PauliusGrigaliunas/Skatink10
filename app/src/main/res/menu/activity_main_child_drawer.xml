@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_action_history"
+            android:title="History" />
+        <item
+            android:id="@+id/nav_register_points"
+            android:icon="@drawable/ic_action_assingment"
+            android:title="Reg tasks" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_action_info"
+                android:title="Info" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_action_name"
+                android:title="Exit" />
+        </menu>
+    </item>
+
+</menu>
