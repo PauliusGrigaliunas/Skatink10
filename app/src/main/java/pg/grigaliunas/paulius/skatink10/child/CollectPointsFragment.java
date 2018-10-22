@@ -68,6 +68,7 @@ public class CollectPointsFragment extends Fragment {
 
         while (c.moveToNext()){
             items = new HashMap<String, String>();
+            items.put("null", "");
             items.put("id", c.getString(0));
             items.put("name", c.getString(1));
             items.put("points",c.getString(2));
@@ -76,7 +77,7 @@ public class CollectPointsFragment extends Fragment {
         }
 
 
-        String from[]={"id","name","points"};
+        String from[]={"null","name","points"};
         int to[] = {R.id.idText, R.id.taskText, R.id.pointText};
 
         SimpleAdapter adapter = new SimpleAdapter(
