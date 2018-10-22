@@ -20,7 +20,6 @@ public class TaskActivity extends AppCompatActivity {
     public DatabaseHelper mydb;
     private EditText name, point;
     private Button addTaskBtn;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +30,9 @@ public class TaskActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.taskText);
         point = (EditText) findViewById(R.id.pointText);
         addTaskBtn = (Button) findViewById(R.id.addButton);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
         createTask();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        returnBack();
     }
 
     private void createTask() {
@@ -43,15 +40,19 @@ public class TaskActivity extends AppCompatActivity {
              new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     boolean isInserted = mydb.insertTaskData(
-                             name.getText().toString(),
-                             Integer.parseInt(point.getText().toString())
-                     );
-                     if (isInserted == true) {
-                         Toast.makeText(TaskActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
+                     if(name.getText().toString().matches(".+")) {
+                         boolean isInserted = mydb.insertTaskData(
+                                 name.getText().toString(),
+                                 Integer.parseInt(point.getText().toString())
+                         );
+                         if (isInserted == true) {
+                             Toast.makeText(TaskActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
+                         } else {
+                             Toast.makeText(TaskActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                         }
                      }
-                     else {
-                         Toast.makeText(TaskActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                     else{
+                         Toast.makeText(TaskActivity.this, "not enough symbols", Toast.LENGTH_LONG).show();
                      }
                  }
              });
@@ -61,18 +62,5 @@ public class TaskActivity extends AppCompatActivity {
         int id = item.getItemId();
         if(id == android.R.id.home) this.finish();
         return super.onOptionsItemSelected(item);
-    }
-
-    private void returnBack() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-    }
-
-    private void goBack() {
-        this.finish();
     }
 }

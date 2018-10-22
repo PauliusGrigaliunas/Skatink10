@@ -1,14 +1,11 @@
 package pg.grigaliunas.paulius.skatink10.parent;
 
 
-import android.annotation.TargetApi;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseTask;
-import pg.grigaliunas.paulius.skatink10.parent.TaskFragment;
 
 
 /**
@@ -32,52 +27,55 @@ public class TaskInfoFragment extends Fragment {
     private DatabaseTask mydb;
     
     private int id;
-    private Button deleteBtn, addPointsBtn, NamBarBtnVar;
+    private Button addPointsBtn, NamBarBtnVar;
     private EditText numberText;
     private TextView nameView;
-    private FloatingActionButton fab;
+    private Toolbar toolbar;
+
+
     public TaskInfoFragment() {
         // Required empty public constructor
     }
-
-    private Toolbar toolbar;
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_task_info, container, false);
         mydb = new DatabaseTask(getActivity());
         id = getArguments().getInt("data");
-        View view = inflater.inflate(R.layout.fragment_task_info, container, false);
-        deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
+
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
+        NamBarBtnVar = new Button(getActivity());
         nameView = (TextView) view.findViewById(R.id.nameView);
         numberText = (EditText) view.findViewById(R.id.numberText);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(1));
+
 
 
         changeToolBar();
         deleteObject();
         addPoints();
-        returnBack();
         return view;
     }
 
-    private void changeToolBar(){
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) getActivity().findViewById(R.id.toolbar);
-        toolbar.setSubtitle("Task info");
 
-        NamBarBtnVar = new Button(getActivity());
+
+
+    private void changeToolBar(){
+
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        toolbar.setSubtitle("Task info");
         NamBarBtnVar.setText("delete");
-        android.support.v7.widget.Toolbar.LayoutParams layoutParams = new android.support.v7.widget.Toolbar.LayoutParams(android.support.v7.widget.Toolbar.LayoutParams.WRAP_CONTENT, android.support.v7.widget.Toolbar.LayoutParams.WRAP_CONTENT);
+        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity=Gravity.END;
         toolbar.addView(NamBarBtnVar, layoutParams);
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+        }
+
+    public void  onDestroyView() {
+        super.onDestroyView();
+        toolbar.removeView(NamBarBtnVar);
     }
-
-
     private void addPoints() {
         addPointsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,15 +107,6 @@ public class TaskInfoFragment extends Fragment {
                 else {
                     Toast.makeText(getActivity(), "Data not deleted", Toast.LENGTH_LONG).show();
                 }
-            }
-        });
-    }
-
-    private void returnBack() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
             }
         });
     }

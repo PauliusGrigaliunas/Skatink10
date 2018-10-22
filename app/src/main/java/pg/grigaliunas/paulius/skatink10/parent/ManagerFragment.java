@@ -4,6 +4,8 @@ package pg.grigaliunas.paulius.skatink10.parent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +27,9 @@ public class ManagerFragment extends Fragment {
 
     private DatabaseHelper mydb;
     private UserData userData = UserData.getInstance();
-    private Button deleteBtn;
+    private Button NamBarBtnVar;
     private TextView nameView, emailView;
+    private Toolbar toolbar;
 
     public ManagerFragment() {
         // Required empty public constructor
@@ -39,15 +42,31 @@ public class ManagerFragment extends Fragment {
 
         mydb = new DatabaseParent(getActivity());
         View view = inflater.inflate(R.layout.fragment_manager, container, false);
-        deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
         emailView= (TextView) view.findViewById(R.id.emailView);
+        NamBarBtnVar = new Button(getActivity());
+        changeToolBar();
         setUser();
         deleteObject();
         return view;
     }
 
+    private void changeToolBar(){
 
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setSubtitle("Settings");
+
+        NamBarBtnVar.setText("delete");
+        Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity=Gravity.END;
+        toolbar.addView(NamBarBtnVar, layoutParams);
+    }
+    @Override
+    public void  onDestroyView() {
+        super.onDestroyView();
+        toolbar.removeView(NamBarBtnVar);
+
+    }
     public void setUser(){
 
         nameView.setText(userData.getData().getString(3)+ " "
@@ -56,7 +75,7 @@ public class ManagerFragment extends Fragment {
     }
 
     private void deleteObject() {
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
+        NamBarBtnVar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isDeleted = mydb.delete(userData.getData().getInt(0));

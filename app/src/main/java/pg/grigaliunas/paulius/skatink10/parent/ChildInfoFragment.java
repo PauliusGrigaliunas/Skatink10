@@ -3,10 +3,8 @@ package pg.grigaliunas.paulius.skatink10.parent;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import android.widget.Toast;
 
 import pg.grigaliunas.paulius.skatink10.R;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
-import pg.grigaliunas.paulius.skatink10.parent.ChildFragment;
 
 
 /**
@@ -29,10 +26,10 @@ public class ChildInfoFragment extends Fragment {
 
     private DatabaseChild mydb, assignDb;
     private int id;
-    private Button deleteBtn, addPointsBtn, NamBarBtnVar;
+    private Button addPointsBtn, NamBarBtnVar;
     private EditText numberText, editText;
     private TextView nameView;
-    private FloatingActionButton fab;
+    private Toolbar toolbar;
 
     public ChildInfoFragment() {
         // Required empty public constructor
@@ -43,40 +40,37 @@ public class ChildInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_child_info, container, false);
-       // View rootView = inflater.inflate(R.layout.activity_main, container, false);
         mydb = new DatabaseChild(getActivity());
         assignDb = new DatabaseChild(getActivity());
         id = getArguments().getInt("data");
-        deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
         addPointsBtn = (Button) view.findViewById(R.id.addpointsBtn);
         nameView = (TextView) view.findViewById(R.id.nameView);
         numberText = (EditText) view.findViewById(R.id.numberText);
         editText = (EditText) view.findViewById(R.id.editText);
-        fab = (FloatingActionButton) view.findViewById(R.id.fab);
         Cursor cursor = mydb.findDataById(id);
         nameView.setText(cursor.getString(3));
-
+        NamBarBtnVar = new Button(getActivity());
 
 
         changeToolBar();
-
-
         deleteObject();
         addPoints();
-        returnBack();
         return view;
+    }
+    @Override
+    public void  onDestroyView() {
+        super.onDestroyView();
+        toolbar.removeView(NamBarBtnVar);
     }
 
     private void changeToolBar(){
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         toolbar.setSubtitle("Child info");
 
-        NamBarBtnVar = new Button(getActivity());
         NamBarBtnVar.setText("delete");
         Toolbar.LayoutParams layoutParams = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity=Gravity.END;
         toolbar.addView(NamBarBtnVar, layoutParams);
-        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
     }
 
     private void addPoints() {
@@ -115,14 +109,6 @@ public class ChildInfoFragment extends Fragment {
         });
     }
 
-    private void returnBack() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-    }
     private void goBack() {
         Fragment fragment = new ChildFragment();
         FragmentTransaction ft = getFragmentManager().beginTransaction();

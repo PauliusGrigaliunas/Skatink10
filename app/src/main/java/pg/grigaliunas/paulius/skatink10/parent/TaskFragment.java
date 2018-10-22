@@ -124,6 +124,7 @@ public class TaskFragment extends Fragment {
                 fragment.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, fragment);
+                ft.addToBackStack(null);
                 ft.commit();
             }
         });

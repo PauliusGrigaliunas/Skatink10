@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.View;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     private UserData userData = UserData.getInstance();
     private TextView textView, fullNameText, EmailText;
     public DatabaseHelper mydb;
-
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         mydb = new DatabaseParent(this);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Parent");
 
         Button NamBarBtnVar = new Button(this);
@@ -86,15 +87,19 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Fragment fragment;
         int id = item.getItemId();
-
-        if (id == R.id.action_delete) {
-            startActivity(new Intent(this, ChildActivity.class));
+        if (id == R.id.action_settings) {
+            fragment = new ManagerFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
             return true;
         }
 

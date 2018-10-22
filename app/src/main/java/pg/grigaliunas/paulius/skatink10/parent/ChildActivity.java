@@ -20,7 +20,7 @@ public class ChildActivity extends AppCompatActivity {
     private UserData userData = UserData.getInstance();
     private Button addChildBtn;
     private EditText usernameText, passwordText, nameText;
-    private FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,50 +33,47 @@ public class ChildActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.passwordText);
         nameText = (EditText) findViewById(R.id.taskText);
         addChildBtn = (Button) findViewById(R.id.addChildBtn);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         AddData();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        returnBack();
 
     }
+
     public void AddData() {
         addChildBtn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean isInserted = mydb.insertChildData(
+
+                        if(usernameText.getText().toString().matches(".+") && nameText.getText().toString().matches(".+")){
+                            boolean isInserted = mydb.insertChildData(
                                 userData.getData().getInt(6),
                                 usernameText.getText().toString(),
                                 passwordText.getText().toString(),
                                 nameText.getText().toString());
-                        if (isInserted == true) {
+
+                            if (isInserted == true) {
                             Toast.makeText(ChildActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(ChildActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                            } else
+                                {
+                                    Toast.makeText(ChildActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else{
+                            Toast.makeText(ChildActivity.this, "not enough symbols", Toast.LENGTH_LONG).show();
                         }
+
                     }
 
                 }
         );
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == android.R.id.home) this.finish();
+        if (id == android.R.id.home) this.finish();
         return super.onOptionsItemSelected(item);
-    }
-
-    private void returnBack() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goBack();
-            }
-        });
-    }
-
-    private void goBack() {
-        this.finish();
     }
 }
