@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pg.grigaliunas.paulius.skatink10.child.MainChildActivity;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseChild;
@@ -68,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                startActivity(new Intent(LoginActivity.this, SighupActivity.class));
             }
         });
     }

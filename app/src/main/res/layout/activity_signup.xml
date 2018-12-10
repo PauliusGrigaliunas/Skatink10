@@ -8,7 +8,7 @@
     android:background="@color/lightYellow"
     android:contentDescription="o"
     android:overScrollMode="ifContentScrolls"
-    tools:context=".SignupActivity">
+    tools:context=".SighupActivity">
 
     <EditText
         android:id="@+id/usernameText1"

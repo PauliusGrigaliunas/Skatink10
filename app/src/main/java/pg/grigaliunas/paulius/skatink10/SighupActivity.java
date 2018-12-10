@@ -11,7 +11,7 @@ import android.widget.Toast;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseHelper;
 import pg.grigaliunas.paulius.skatink10.dataBase.DatabaseParent;
 
-public class SignupActivity extends AppCompatActivity {
+public class SighupActivity extends AppCompatActivity {
 
     private DatabaseHelper mydb;
     private EditText username, password, name, surname, email, phone;
@@ -51,10 +51,10 @@ public class SignupActivity extends AppCompatActivity {
                                 email.getText().toString(),
                                 phone.getText().toString());
                         if (isInserted == true) {
-                            Toast.makeText(SignupActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SighupActivity.this, "Data inserted", Toast.LENGTH_LONG).show();
                         }
                         else {
-                            Toast.makeText(SignupActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SighupActivity.this, "Data not inserted", Toast.LENGTH_LONG).show();
                         }
                     }
 

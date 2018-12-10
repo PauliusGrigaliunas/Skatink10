@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".SighupActivity"
             android:label="@string/sign_up" />
         <activity android:name=".parent.TaskActivity" />
         <activity android:name=".parent.ChildActivity" />
